@@ -1,97 +1,77 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Number Doubler</title>
-
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(145deg, #1d1f21, #2c3035);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .card {
-            background: #2f343a;
-            padding: 30px;
-            border-radius: 15px;
-            width: 350px;
+            background: #f3f4f6;
+            padding: 50px;
             text-align: center;
-            box-shadow: 0px 8px 25px rgba(0,0,0,0.3);
-            border: 1px solid #444;
         }
-
-        h2 {
-            margin-bottom: 20px;
-            font-size: 26px;
-            color: #00d4ff;
+        .box {
+            background: white;
+            padding: 30px;
+            width: 350px;
+            margin: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         input {
-            width: 80%;
-            padding: 12px;
-            border-radius: 8px;
-            border: none;
-            margin-bottom: 15px;
-            font-size: 18px;
+            padding: 10px;
+            border-radius: 5px;
+            width: 60%;
+            border: 1px solid #ccc;
         }
 
         button {
-            background: #00d4ff;
-            color: black;
+            padding: 10px 20px;
+            background: #2563eb;
+            color: white;
             border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: bold;
+            border-radius: 5px;
             cursor: pointer;
-            width: 85%;
         }
 
         button:hover {
-            background: #00b5db;
+            background: #1e3a8a;
         }
 
         #result {
             margin-top: 20px;
-            font-size: 22px;
+            font-size: 20px;
             font-weight: bold;
-            color: #7df1a8;
         }
     </style>
 </head>
 <body>
+    <div class="box">
+        <h1>Number Doubler</h1>
 
-<div class="card">
-    <h2>Number Doubler</h2>
+        <input id="numberInput" type="number" placeholder="Enter a number" />
+        <button onclick="sendNumber()">Double It</button>
 
-    <input id="num" type="number" placeholder="Enter a number">
-    <button onclick="sendNumber()">Double It</button>
+        <div id="result"></div>
+    </div>
 
-    <p id="result"></p>
-</div>
+    <script>
+        async function sendNumber() {
+            const number = document.getElementById("numberInput").value;
 
-<script>
-async function sendNumber() {
-    const number = Number(document.getElementById("num").value);
+            const response = await fetch("https://number-doubler-backend.onrender.com/double", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ number: Number(number) })
+            });
 
-    const response = await fetch("http://127.0.0.1:5000/double", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ number: number })
-    });
-
-    const data = await response.json();
-    document.getElementById("result").innerText = "Result: " + data.result;
-}
-</script>
-
+            const data = await response.json();
+            document.getElementById("result").innerText = "Result: " + data.result;
+        }
+    </script>
 </body>
 </html>
