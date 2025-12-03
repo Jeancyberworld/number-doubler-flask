@@ -8,14 +8,14 @@
 </head>
 
 <body>
-    <div class="container">
-        <h1>Number Doubler</h1>
+
+    <div class="card">
+        <h2>Number Doubler</h2>
 
         <input id="numberInput" type="number" placeholder="Enter a number">
-
         <button onclick="doubleNumber()">Double It</button>
 
-        <p id="result">Result: </p>
+        <p id="result">Result:</p>
     </div>
 
     <script>
@@ -30,7 +30,11 @@
 
             const data = await response.json();
 
-            document.getElementById("result").innerText = "Result: " + data.result;
+            const resultBox = document.getElementById("result");
+            resultBox.innerText = "Result: " + data.result;
+
+            // Make result visible only after calculation
+            resultBox.style.display = "block";
         }
     </script>
 
